@@ -16,14 +16,26 @@ public class Handler {
     private final IRegistryUserUseCase registryUserUseCase;
     private final UserDTOMapper userDTOMapper;
 
+    public Mono<ServerResponse> listenGETUseCase(ServerRequest serverRequest) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
+    public Mono<ServerResponse> listenGETOtherUseCase(ServerRequest serverRequest) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
+    public Mono<ServerResponse> listenPOSTUseCase(ServerRequest serverRequest) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
     public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(UsuarioRequestDTO.class)
                 .flatMap(dto ->
                         registryUserUseCase.RegistryUser(userDTOMapper.mapToEntity(dto))
-                                .then(ServerResponse.ok().bodyValue("Usuario guardado correctamente"))
+                                .then(ServerResponse.ok().bodyValue("User Saved"))
                 )
                 .onErrorResume(IllegalArgumentException.class,
-                        e -> ServerResponse.badRequest().bodyValue("Error de validación: " + e.getMessage()))
-                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Error interno: " + e.getMessage()));
+                        e -> ServerResponse.badRequest().bodyValue("Validation Error: " + e.getMessage()))
+                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Server Error: " + e.getMessage()));
     }
 }
