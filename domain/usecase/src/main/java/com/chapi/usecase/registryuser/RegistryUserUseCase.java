@@ -31,10 +31,10 @@ public class RegistryUserUseCase implements IRegistryUserUseCase {
 
         return validationQueue.validate(usuario)
                 .then(rolRepository.getRolById(rolIdFijo)
-                        .switchIfEmpty(Mono.error(new IllegalArgumentException("Rol fijo no encontrado")))
+                        .switchIfEmpty(Mono.error(new IllegalArgumentException("Rol does not exist with id: " + rolIdFijo)))
                         .flatMap(rol -> {
                             Usuario usuarioConRol = usuario.toBuilder().rol(rol).build();
-                            System.out.println("Usuario con rol asignado: " + usuarioConRol.getRol().getUniqueId());
+                            System.out.println("User with rol asigned : " + usuarioConRol.getRol().getUniqueId());
                             return usuarioRepository.saveUsuario(usuarioConRol);
                         })
                 ).then();
