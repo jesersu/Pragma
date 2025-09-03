@@ -5,19 +5,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IllegalStateErrorStrategy implements ErrorMappingStrategy {
+public class UnauthorizedStrategy implements ErrorMappingStrategy {
     @Override
     public boolean supports(Throwable error) {
-        return error instanceof IllegalStateException;
+        return error instanceof SecurityException
+                || error.getMessage().toLowerCase().contains("unauthorized");
     }
+
 
     @Override
     public HttpStatus getStatus() {
-        return HttpStatus.CONFLICT;
+        return HttpStatus.UNAUTHORIZED;
     }
 
     @Override
     public String getCustomMessage(Throwable error) {
-        return "Conflict: " + error.getMessage();
+        return "Unauthorized: " + error.getMessage();
     }
 }

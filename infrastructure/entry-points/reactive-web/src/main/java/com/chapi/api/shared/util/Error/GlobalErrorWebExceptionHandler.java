@@ -43,7 +43,6 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
         Throwable error = getError(request);
         Map<String, Object> errorProps = getErrorAttributes(request, ErrorAttributeOptions.defaults());
 
-        // 🔎 Pick the first matching strategy
         ErrorMappingStrategy strategy = strategies.stream()
                 .filter(s -> s.supports(error))
                 .findFirst()
@@ -66,3 +65,20 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
         }
     }
 }
+
+
+//    if (error instanceof IllegalArgumentException) {
+//status = HttpStatus.BAD_REQUEST;
+//    } else if (error instanceof UnsupportedOperationException) {
+//status = HttpStatus.NOT_IMPLEMENTED;
+//    } else if (error instanceof NullPointerException) {
+//status = HttpStatus.NOT_FOUND;
+//    } else if (error instanceof IllegalStateException) {
+//status = HttpStatus.CONFLICT;
+//    } else if (error instanceof SecurityException) {
+//status = HttpStatus.UNAUTHORIZED; // 401 Unauthorized
+//    } else if (error instanceof PaymentRequiredException) {
+//status = HttpStatus.PAYMENT_REQUIRED; // 402 Payment Required
+//    } else if (error instanceof AccessDeniedException) {
+//status = HttpStatus.FORBIDDEN; // 403 Forbidden
+//    }
