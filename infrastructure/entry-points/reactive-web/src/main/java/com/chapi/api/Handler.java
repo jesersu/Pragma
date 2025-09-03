@@ -30,14 +30,23 @@ public class Handler {
         return ServerResponse.ok().bodyValue("");
     }
 
+//    public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
+//        return serverRequest.bodyToMono(UsuarioRequestDTO.class)
+//                .flatMap(dto ->
+//                        registryUserUseCase.RegistryUser(userDTOMapper.mapToEntity(dto))
+//                                .then(ServerResponse.ok().bodyValue("User Saved"))
+//                )
+//                .onErrorResume(IllegalArgumentException.class,
+//                        e -> ServerResponse.badRequest().bodyValue("Validation Error: " + e.getMessage()))
+//                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Server Error: " + e.getMessage()));
+//    }
+
     public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(UsuarioRequestDTO.class)
                 .flatMap(dto ->
                         registryUserUseCase.RegistryUser(userDTOMapper.mapToEntity(dto))
                                 .then(ServerResponse.ok().bodyValue("User Saved"))
-                )
-                .onErrorResume(IllegalArgumentException.class,
-                        e -> ServerResponse.badRequest().bodyValue("Validation Error: " + e.getMessage()))
-                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Server Error: " + e.getMessage()));
+                );
     }
+
 }

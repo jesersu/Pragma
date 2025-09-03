@@ -1,4 +1,4 @@
-package shared.util.CustomLogger;
+package com.chapi.api.shared.util.CustomLogger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;

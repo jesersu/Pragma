@@ -1,4 +1,4 @@
-package shared.util.CustomLogger;
+package com.chapi.api.shared.util.CustomLogger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
